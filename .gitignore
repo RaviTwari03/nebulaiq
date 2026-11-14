@@ -1,0 +1,48 @@
+# Xcode
+build/
+DerivedData/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Xcode User Data & State
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+project.xcworkspace/xcuserdata/
+nebulaiq.xcodeproj/xcuserdata/
+nebulaiq.xcodeproj/project.xcworkspace/xcuserdata/
+
+# Swift Package Manager
+.build/
+Packages/
+Package.pins
+
+# CocoaPods & Carthage
+Pods/
+Carthage/Build/
+
+# macOS System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Sensitive Credentials & Keys
+.env
+.env.*
+!.env.example
+*.p8
+*.p12
+*.mobileprovision
+*.pem
+*.key
+
+# Supabase local generated files
+supabase/.temp/
+.supabase/
