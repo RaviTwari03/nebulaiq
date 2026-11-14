@@ -16,6 +16,7 @@ final class NotificationService: NSObject, ObservableObject, UNUserNotificationC
         super.init()
         UNUserNotificationCenter.current().delegate = self
         checkAuthorization()
+        seedSampleNotifications()
     }
     
     func checkAuthorization() {
@@ -74,6 +75,49 @@ final class NotificationService: NSObject, ObservableObject, UNUserNotificationC
             notifications[idx].isRead = true
         }
         unreadCount = 0
+    }
+    
+    // MARK: - Initial Mock / Demo Data
+    
+    func seedSampleNotifications() {
+        guard notifications.isEmpty else { return }
+        
+        notifications = [
+            AppNotification(
+                id: UUID(),
+                recipientUserId: UUID(),
+                triggeringUserId: UUID(),
+                groupId: UUID(),
+                title: "Safe Zone Exit",
+                body: "Sarah Connor has left Family Safe Zone (Home Perimeter).",
+                eventType: "exit",
+                isRead: false,
+                createdAt: Date().addingTimeInterval(-60 * 12)
+            ),
+            AppNotification(
+                id: UUID(),
+                recipientUserId: UUID(),
+                triggeringUserId: UUID(),
+                groupId: UUID(),
+                title: "Safe Zone Exit",
+                body: "Jordan Smith has left Weekend Hiking Team (Basecamp Circle).",
+                eventType: "exit",
+                isRead: false,
+                createdAt: Date().addingTimeInterval(-60 * 65)
+            ),
+            AppNotification(
+                id: UUID(),
+                recipientUserId: UUID(),
+                triggeringUserId: nil,
+                groupId: nil,
+                title: "Geofence Active",
+                body: "Background location monitoring is now active for 2 designated zones.",
+                eventType: "info",
+                isRead: true,
+                createdAt: Date().addingTimeInterval(-3600 * 6)
+            )
+        ]
+        unreadCount = 2
     }
     
     // MARK: - UNUserNotificationCenterDelegate

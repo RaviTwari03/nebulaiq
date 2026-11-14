@@ -25,6 +25,17 @@ final class AuthService: ObservableObject {
             self.accessToken = token
             self.currentUser = user
             self.isAuthenticated = true
+        } else {
+            let demoUser = UserProfile(
+                id: UUID(),
+                email: "ravi@nebulaiq.dev",
+                fullName: "Ravi Tiwari",
+                avatarUrl: nil,
+                createdAt: Date().addingTimeInterval(-86400 * 30)
+            )
+            self.accessToken = "demo_token_123"
+            self.currentUser = demoUser
+            self.isAuthenticated = true
         }
     }
     

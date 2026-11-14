@@ -11,7 +11,9 @@ final class GroupService: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
     
-    init() {}
+    init() {
+        seedSampleData()
+    }
     
     func generateInviteCode() -> String {
         let characters = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
@@ -19,9 +21,9 @@ final class GroupService: ObservableObject {
     }
     
     func fetchUserGroups(userId: UUID) async throws {
-        isLoading = true
-        defer { isLoading = false }
-        // Populated in Phase 3 via Supabase
+        if groups.isEmpty {
+            seedSampleData()
+        }
     }
     
     func createGroup(name: String, creator: UserProfile) async throws -> TrackingGroup {
@@ -89,5 +91,136 @@ final class GroupService: ObservableObject {
         if let idx = groups.firstIndex(where: { $0.id == groupId }) {
             groups[idx].activeGeofence = geofence
         }
+    }
+    
+    // MARK: - Initial Mock / Demo Data
+    
+    func seedSampleData() {
+        let user1Id = UUID()
+        let user2Id = UUID()
+        let user3Id = UUID()
+        let currentUserId = AuthService.shared.currentUser?.id ?? UUID()
+        
+        let profileCurrent = AuthService.shared.currentUser ?? UserProfile(
+            id: currentUserId,
+            email: "ravi@nebulaiq.dev",
+            fullName: "Ravi Tiwari",
+            avatarUrl: nil,
+            createdAt: Date().addingTimeInterval(-86400 * 30)
+        )
+        
+        let profileSarah = UserProfile(
+            id: user1Id,
+            email: "sarah.c@example.com",
+            fullName: "Sarah Connor",
+            avatarUrl: nil,
+            createdAt: Date().addingTimeInterval(-86400 * 20)
+        )
+        
+        let profileAlex = UserProfile(
+            id: user2Id,
+            email: "alex.chen@example.com",
+            fullName: "Alex Chen",
+            avatarUrl: nil,
+            createdAt: Date().addingTimeInterval(-86400 * 15)
+        )
+        
+        let profileJordan = UserProfile(
+            id: user3Id,
+            email: "jordan.s@example.com",
+            fullName: "Jordan Smith",
+            avatarUrl: nil,
+            createdAt: Date().addingTimeInterval(-86400 * 10)
+        )
+        
+        // Group 1: Family Safe Zone
+        let group1Id = UUID()
+        let geofence1 = Geofence(
+            id: UUID(),
+            groupId: group1Id,
+            name: "Home Perimeter",
+            latitude: 37.7749,
+            longitude: -122.4194,
+            radiusMeters: 250.0,
+            isActive: true,
+            createdBy: currentUserId,
+            createdAt: Date().addingTimeInterval(-86400 * 5),
+            updatedAt: nil
+        )
+        
+        let group1 = TrackingGroup(
+            id: group1Id,
+            name: "Family Safe Zone",
+            inviteCode: "FAM892",
+            creatorId: currentUserId,
+            createdAt: Date().addingTimeInterval(-86400 * 7),
+            memberCount: 3,
+            activeGeofence: geofence1
+        )
+        
+        let members1 = [
+            GroupMember(id: UUID(), groupId: group1Id, userId: currentUserId, role: .creator, joinedAt: Date().addingTimeInterval(-86400 * 7), profile: profileCurrent),
+            GroupMember(id: UUID(), groupId: group1Id, userId: user1Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 5), profile: profileSarah),
+            GroupMember(id: UUID(), groupId: group1Id, userId: user2Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 4), profile: profileAlex)
+        ]
+        
+        // Group 2: Weekend Hiking Team
+        let group2Id = UUID()
+        let geofence2 = Geofence(
+            id: UUID(),
+            groupId: group2Id,
+            name: "Basecamp Circle",
+            latitude: 37.7891,
+            longitude: -122.4014,
+            radiusMeters: 500.0,
+            isActive: true,
+            createdBy: user2Id,
+            createdAt: Date().addingTimeInterval(-86400 * 2),
+            updatedAt: nil
+        )
+        
+        let group2 = TrackingGroup(
+            id: group2Id,
+            name: "Weekend Hiking Team",
+            inviteCode: "HIKE45",
+            creatorId: user2Id,
+            createdAt: Date().addingTimeInterval(-86400 * 3),
+            memberCount: 3,
+            activeGeofence: geofence2
+        )
+        
+        let members2 = [
+            GroupMember(id: UUID(), groupId: group2Id, userId: user2Id, role: .creator, joinedAt: Date().addingTimeInterval(-86400 * 3), profile: profileAlex),
+            GroupMember(id: UUID(), groupId: group2Id, userId: currentUserId, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 2), profile: profileCurrent),
+            GroupMember(id: UUID(), groupId: group2Id, userId: user3Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 1), profile: profileJordan)
+        ]
+        
+        // Group 3: Downtown Office
+        let group3Id = UUID()
+        let group3 = TrackingGroup(
+            id: group3Id,
+            name: "Downtown Office",
+            inviteCode: "OFFICE",
+            creatorId: currentUserId,
+            createdAt: Date().addingTimeInterval(-86400 * 1),
+            memberCount: 2,
+            activeGeofence: nil
+        )
+        
+        let members3 = [
+            GroupMember(id: UUID(), groupId: group3Id, userId: currentUserId, role: .creator, joinedAt: Date().addingTimeInterval(-86400 * 1), profile: profileCurrent),
+            GroupMember(id: UUID(), groupId: group3Id, userId: user1Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 1), profile: profileSarah)
+        ]
+        
+        self.groups = [group1, group2, group3]
+        self.geofencesByGroup = [
+            group1Id: geofence1,
+            group2Id: geofence2
+        ]
+        self.membersByGroup = [
+            group1Id: members1,
+            group2Id: members2,
+            group3Id: members3
+        ]
     }
 }
