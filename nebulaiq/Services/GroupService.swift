@@ -93,55 +93,64 @@ final class GroupService: ObservableObject {
         }
     }
     
-    // MARK: - Initial Mock / Demo Data
+    // MARK: - Initial Mock / Human Names
     
     func seedSampleData() {
         let user1Id = UUID()
         let user2Id = UUID()
         let user3Id = UUID()
+        let user4Id = UUID()
         let currentUserId = AuthService.shared.currentUser?.id ?? UUID()
         
         let profileCurrent = AuthService.shared.currentUser ?? UserProfile(
             id: currentUserId,
-            email: "ravi@nebulaiq.dev",
-            fullName: "Ravi Tiwari",
+            email: "ravirkt0@gmail.com",
+            fullName: "Ravi",
             avatarUrl: nil,
             createdAt: Date().addingTimeInterval(-86400 * 30)
         )
         
-        let profileSarah = UserProfile(
+        let profileNeha = UserProfile(
             id: user1Id,
-            email: "sarah.c@example.com",
-            fullName: "Sarah Connor",
+            email: "neha.t@gmail.com",
+            fullName: "Neha Tiwari",
             avatarUrl: nil,
             createdAt: Date().addingTimeInterval(-86400 * 20)
         )
         
-        let profileAlex = UserProfile(
+        let profileAarav = UserProfile(
             id: user2Id,
-            email: "alex.chen@example.com",
-            fullName: "Alex Chen",
+            email: "aarav.t@gmail.com",
+            fullName: "Aarav Tiwari",
             avatarUrl: nil,
             createdAt: Date().addingTimeInterval(-86400 * 15)
         )
         
-        let profileJordan = UserProfile(
+        let profileRohan = UserProfile(
             id: user3Id,
-            email: "jordan.s@example.com",
-            fullName: "Jordan Smith",
+            email: "rohan.mehta@gmail.com",
+            fullName: "Rohan Mehta",
             avatarUrl: nil,
             createdAt: Date().addingTimeInterval(-86400 * 10)
         )
         
-        // Group 1: Family Safe Zone
+        let profilePooja = UserProfile(
+            id: user4Id,
+            email: "pooja.v@gmail.com",
+            fullName: "Pooja Verma",
+            avatarUrl: nil,
+            createdAt: Date().addingTimeInterval(-86400 * 8)
+        )
+        
+        // Group 1: Our Family
         let group1Id = UUID()
         let geofence1 = Geofence(
             id: UUID(),
             groupId: group1Id,
-            name: "Home Perimeter",
+            name: "Home",
             latitude: 37.7749,
             longitude: -122.4194,
-            radiusMeters: 250.0,
+            radiusMeters: 200.0,
             isActive: true,
             createdBy: currentUserId,
             createdAt: Date().addingTimeInterval(-86400 * 5),
@@ -150,8 +159,8 @@ final class GroupService: ObservableObject {
         
         let group1 = TrackingGroup(
             id: group1Id,
-            name: "Family Safe Zone",
-            inviteCode: "FAM892",
+            name: "Our Family",
+            inviteCode: "HOME01",
             creatorId: currentUserId,
             createdAt: Date().addingTimeInterval(-86400 * 7),
             memberCount: 3,
@@ -160,47 +169,47 @@ final class GroupService: ObservableObject {
         
         let members1 = [
             GroupMember(id: UUID(), groupId: group1Id, userId: currentUserId, role: .creator, joinedAt: Date().addingTimeInterval(-86400 * 7), profile: profileCurrent),
-            GroupMember(id: UUID(), groupId: group1Id, userId: user1Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 5), profile: profileSarah),
-            GroupMember(id: UUID(), groupId: group1Id, userId: user2Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 4), profile: profileAlex)
+            GroupMember(id: UUID(), groupId: group1Id, userId: user1Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 5), profile: profileNeha),
+            GroupMember(id: UUID(), groupId: group1Id, userId: user2Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 4), profile: profileAarav)
         ]
         
-        // Group 2: Weekend Hiking Team
+        // Group 2: College Friends
         let group2Id = UUID()
         let geofence2 = Geofence(
             id: UUID(),
             groupId: group2Id,
-            name: "Basecamp Circle",
+            name: "Beach Villa",
             latitude: 37.7891,
             longitude: -122.4014,
-            radiusMeters: 500.0,
+            radiusMeters: 400.0,
             isActive: true,
-            createdBy: user2Id,
+            createdBy: user3Id,
             createdAt: Date().addingTimeInterval(-86400 * 2),
             updatedAt: nil
         )
         
         let group2 = TrackingGroup(
             id: group2Id,
-            name: "Weekend Hiking Team",
-            inviteCode: "HIKE45",
-            creatorId: user2Id,
+            name: "College Friends",
+            inviteCode: "TRIP24",
+            creatorId: user3Id,
             createdAt: Date().addingTimeInterval(-86400 * 3),
             memberCount: 3,
             activeGeofence: geofence2
         )
         
         let members2 = [
-            GroupMember(id: UUID(), groupId: group2Id, userId: user2Id, role: .creator, joinedAt: Date().addingTimeInterval(-86400 * 3), profile: profileAlex),
+            GroupMember(id: UUID(), groupId: group2Id, userId: user3Id, role: .creator, joinedAt: Date().addingTimeInterval(-86400 * 3), profile: profileRohan),
             GroupMember(id: UUID(), groupId: group2Id, userId: currentUserId, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 2), profile: profileCurrent),
-            GroupMember(id: UUID(), groupId: group2Id, userId: user3Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 1), profile: profileJordan)
+            GroupMember(id: UUID(), groupId: group2Id, userId: user4Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 1), profile: profilePooja)
         ]
         
-        // Group 3: Downtown Office
+        // Group 3: Office Team
         let group3Id = UUID()
         let group3 = TrackingGroup(
             id: group3Id,
-            name: "Downtown Office",
-            inviteCode: "OFFICE",
+            name: "Office Team",
+            inviteCode: "WORK42",
             creatorId: currentUserId,
             createdAt: Date().addingTimeInterval(-86400 * 1),
             memberCount: 2,
@@ -209,7 +218,7 @@ final class GroupService: ObservableObject {
         
         let members3 = [
             GroupMember(id: UUID(), groupId: group3Id, userId: currentUserId, role: .creator, joinedAt: Date().addingTimeInterval(-86400 * 1), profile: profileCurrent),
-            GroupMember(id: UUID(), groupId: group3Id, userId: user1Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 1), profile: profileSarah)
+            GroupMember(id: UUID(), groupId: group3Id, userId: user1Id, role: .member, joinedAt: Date().addingTimeInterval(-86400 * 1), profile: profileNeha)
         ]
         
         self.groups = [group1, group2, group3]

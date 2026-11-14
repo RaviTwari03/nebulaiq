@@ -146,7 +146,8 @@ struct GroupDetailView: View {
         }
         .listStyle(.insetGrouped)
         .navigationTitle(viewModel.group.name)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
+        .toolbarBackground(.visible, for: .navigationBar)
         .sheet(isPresented: $showGeofenceConfig) {
             GeofenceConfigView(group: viewModel.group)
         }

@@ -28,8 +28,8 @@ final class AuthService: ObservableObject {
         } else {
             let demoUser = UserProfile(
                 id: UUID(),
-                email: "ravi@nebulaiq.dev",
-                fullName: "Ravi Tiwari",
+                email: "ravirkt0@gmail.com",
+                fullName: "Ravi",
                 avatarUrl: nil,
                 createdAt: Date().addingTimeInterval(-86400 * 30)
             )

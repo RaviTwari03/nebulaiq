@@ -77,7 +77,7 @@ final class NotificationService: NSObject, ObservableObject, UNUserNotificationC
         unreadCount = 0
     }
     
-    // MARK: - Initial Mock / Demo Data
+    // MARK: - Initial Mock / Human Names
     
     func seedSampleNotifications() {
         guard notifications.isEmpty else { return }
@@ -89,7 +89,7 @@ final class NotificationService: NSObject, ObservableObject, UNUserNotificationC
                 triggeringUserId: UUID(),
                 groupId: UUID(),
                 title: "Safe Zone Exit",
-                body: "Sarah Connor has left Family Safe Zone (Home Perimeter).",
+                body: "Neha left Home (Our Family).",
                 eventType: "exit",
                 isRead: false,
                 createdAt: Date().addingTimeInterval(-60 * 12)
@@ -100,7 +100,7 @@ final class NotificationService: NSObject, ObservableObject, UNUserNotificationC
                 triggeringUserId: UUID(),
                 groupId: UUID(),
                 title: "Safe Zone Exit",
-                body: "Jordan Smith has left Weekend Hiking Team (Basecamp Circle).",
+                body: "Rohan left Beach Villa (College Friends).",
                 eventType: "exit",
                 isRead: false,
                 createdAt: Date().addingTimeInterval(-60 * 65)
@@ -111,7 +111,7 @@ final class NotificationService: NSObject, ObservableObject, UNUserNotificationC
                 triggeringUserId: nil,
                 groupId: nil,
                 title: "Geofence Active",
-                body: "Background location monitoring is now active for 2 designated zones.",
+                body: "Background safe zone monitoring is active for 2 locations.",
                 eventType: "info",
                 isRead: true,
                 createdAt: Date().addingTimeInterval(-3600 * 6)
