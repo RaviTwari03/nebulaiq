@@ -89,7 +89,7 @@ final class NotificationService: NSObject, ObservableObject, UNUserNotificationC
                 triggeringUserId: UUID(),
                 groupId: UUID(),
                 title: "Safe Zone Exit",
-                body: "Neha left Home (Our Family).",
+                body: "Neha left Home (Baridih).",
                 eventType: "exit",
                 isRead: false,
                 createdAt: Date().addingTimeInterval(-60 * 12)
@@ -100,7 +100,7 @@ final class NotificationService: NSObject, ObservableObject, UNUserNotificationC
                 triggeringUserId: UUID(),
                 groupId: UUID(),
                 title: "Safe Zone Exit",
-                body: "Rohan left Beach Villa (College Friends).",
+                body: "Rohan left Jubilee Park (College Friends).",
                 eventType: "exit",
                 isRead: false,
                 createdAt: Date().addingTimeInterval(-60 * 65)

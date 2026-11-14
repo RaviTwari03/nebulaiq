@@ -26,7 +26,7 @@ final class GeofenceConfigViewModel: ObservableObject {
             self.radiusMeters = existing.radiusMeters
         } else {
             self.name = "\(group.name) Safe Zone"
-            let userLoc = locationService.currentLocation?.coordinate ?? CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
+            let userLoc = locationService.currentLocation?.coordinate ?? CLLocationCoordinate2D(latitude: 22.802772, longitude: 86.256396)
             self.centerCoordinate = userLoc
             self.radiusMeters = AppConfig.defaultGeofenceRadiusMeters
         }
